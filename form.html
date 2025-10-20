@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Mixta - Formulario</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="calendar.html">Calendario</a>
+        <a href="form.html" class="active">Formulario</a>
+        <a href="about.html">Acerca de</a>
+    </nav>
+    <main>
+        <h1>Formulario con Select2</h1>
+        <p>Las librerías <strong>jQuery</strong> y <strong>Select2</strong> se sirven con la estrategia <strong>Cache First, Network Fallback</strong>.</p>
+        <select class="js-example-basic-single" name="state" style="width: 50%;">
+            <option value="AL">Alabama</option>
+            <option value="WY">Wyoming</option>
+            <option value="CA">California</option>
+            <option value="TX">Texas</option>
+        </select>
+    </main>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+    <script src="register.js"></script>
+</body>
+</html>
