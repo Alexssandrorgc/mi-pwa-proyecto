@@ -1,12 +1,14 @@
 const STATIC_CACHE_NAME = 'app-shell-v2';
 const DYNAMIC_CACHE_NAME = 'dynamic-cache-v1';
 
+
+const REPO_PATH = '/mi-pwa-proyecto/';
 const APP_SHELL_ASSETS = [
-    '.',
-    'index.html',
-    'about.html',
-    'style.css',
-    'register.js'
+    REPO_PATH, // Ruta raíz del proyecto
+    `${REPO_PATH}index.html`,
+    `${REPO_PATH}about.html`,
+    `${REPO_PATH}style.css`,
+    `${REPO_PATH}register.js`
 ];
 
 const DYNAMIC_ASSET_URLS = [
@@ -31,18 +33,22 @@ self.addEventListener('fetch', event => {
     const { request } = event;
     const url = new URL(request.url);
 
+    // Estrategia 1: Cache Only para el App Shell esencial
     if (APP_SHELL_ASSETS.includes(url.pathname)) {
         event.respondWith(caches.match(request));
     } 
-
-    else if (DYNAMIC_ASSET_URLS.includes(request.url)) {
+    // Estrategia 2: Cache First para TODO LO DEMÁS
+    else {
         event.respondWith(
             caches.match(request).then(cachedResponse => {
+                // Si está en caché, lo retornamos
                 if (cachedResponse) {
                     return cachedResponse;
                 }
                 
+                // Si no, vamos a la red
                 return fetch(request).then(networkResponse => {
+                    // Y guardamos la respuesta en el caché dinámico para la próxima vez
                     return caches.open(DYNAMIC_CACHE_NAME).then(cache => {
                         cache.put(request, networkResponse.clone());
                         return networkResponse;
